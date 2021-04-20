@@ -1,8 +1,8 @@
 # slanted-stixels
 An implementation of Slanted Stixels
 
-<img src=https://github.com/gishi523/slanted-stixels/wiki/images/depth_input.png width=440> <img src=https://github.com/gishi523/slanted-stixels/wiki/images/semantic_input.png width=440>  
-<img src=https://github.com/gishi523/slanted-stixels/wiki/images/slanted_stixels_depth.png width=440> <img src=https://github.com/gishi523/slanted-stixels/wiki/images/slanted_stixels_semantic.png width=440>
+<img src=https://github.com/gishi523/slanted-stixels/wiki/images/depth_input.png width=400> <img src=https://github.com/gishi523/slanted-stixels/wiki/images/semantic_input.png width=400>  
+<img src=https://github.com/gishi523/slanted-stixels/wiki/images/slanted_stixels_depth.png width=400> <img src=https://github.com/gishi523/slanted-stixels/wiki/images/slanted_stixels_semantic.png width=400>
 
 ## Description
 - An implementation of the slanted stixel computation based on [1][2]
