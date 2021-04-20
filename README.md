@@ -1,6 +1,9 @@
 # slanted-stixels
 An implementation of Slanted Stixels
 
+<img src=https://github.com/gishi523/slanted-stixels/wiki/images/depth_input.png width=440> <img src=https://github.com/gishi523/slanted-stixels/wiki/images/semantic_input.png width=440>  
+<img src=https://github.com/gishi523/slanted-stixels/wiki/images/slanted_stixels_depth.png width=440> <img src=https://github.com/gishi523/slanted-stixels/wiki/images/slanted_stixels_semantic.png width=440>
+
 ## Description
 - An implementation of the slanted stixel computation based on [1][2]
 	- Extracts slanted stixels from a disparity map, a disparity confidence, and a semantic segmentation
@@ -89,8 +92,8 @@ cd slanted_stixels
 
 ./build/slanted_stixels \
 
-path_to_left_images/imgleft%2509d.pgm \
-path_to_right_images/imgright%2509d.pgm \
+path_to_left_images/imgleft%09d.pgm \
+path_to_right_images/imgright%09d.pgm \
 --camera=camera_parameters/daimler_urban_seg.xml \
 --depth-only
 ```
