@@ -134,7 +134,7 @@ void drawDepthStixels(const cv::Mat& img, const std::vector<Stixel>& stixels, cv
 		}
 		else if (drawGrd)
 		{
-			for (int v = stixel.vT; v <= stixel.vB; v++)
+			for (int v = stixel.vT; v < stixel.vB; v++)
 				for (int u = stixel.uL; u < stixel.uL + stixel.width; u++)
 					stixelImg.at<cv::Vec3b>(v, u) = dispToColor(stixel.disp[0] * v + stixel.disp[1]);
 		}
