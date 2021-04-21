@@ -228,6 +228,14 @@ static void reduceTranspose(const cv::Mat1f& src, cv::Mat1f& dst, int stixelW, i
 	}
 }
 
+static void reduceTranspose(const cv::Mat1f& src, cv::Mat1f& dst, int ch, int stixelW, int stixelH,
+	bool hasInvalidValue = false)
+{
+	const cv::Mat1f _src = getch(src, ch);
+	cv::Mat1f _dst = getch(dst, ch);
+	reduceTranspose(_src, _dst, stixelW, stixelH, hasInvalidValue);
+}
+
 static Line calcRoadModelCamera(const CameraParameters& camera)
 {
 	const float sinTilt = sinf(camera.tilt);
@@ -707,7 +715,6 @@ static void processOneColumn(int u, const cv::Mat1f& disparity, const cv::Mat1f&
 	const int vmax = disparity.cols;
 	const int dmax = invSigmaOSq.cols;
 	const int vhor = static_cast<int>(road.vhor());
-	const int chns = SATsem.size[1];
 
 	// compute Summed Area Tables (SAT) for slanted plane
 	const float* disparityU = disparity.ptr<float>(u);
@@ -1027,27 +1034,27 @@ public:
 	{
 		stixels.clear();
 
-		const int stixeW = param_.stixelWidth;
-		const int stixeH = param_.stixelYResolution;
+		const int stixelW = param_.stixelWidth;
+		const int stixelH = param_.stixelYResolution;
 
 		const CameraParameters& camera = param_.camera;
 
 		CV_Assert(disparity.type() == CV_32F && confidence.type() == CV_32F);
 		CV_Assert(disparity.size() == confidence.size());
-		CV_Assert(stixeW == STIXEL_WIDTH_4 || stixeW == STIXEL_WIDTH_8);
-		CV_Assert(stixeH == STIXEL_Y_RESOLUTION_4 || stixeH == STIXEL_Y_RESOLUTION_8);
+		CV_Assert(stixelW == STIXEL_WIDTH_4 || stixelW == STIXEL_WIDTH_8);
+		CV_Assert(stixelH == STIXEL_Y_RESOLUTION_4 || stixelH == STIXEL_Y_RESOLUTION_8);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// process depth input
 		//////////////////////////////////////////////////////////////////////////////
 
 		// reduce and reorder disparity map
-		reduceTranspose(disparity, disparity_, stixeW, stixeH, true);
-		reduceTranspose(confidence, confidence_, stixeW, stixeH);
+		reduceTranspose(disparity, disparity_, stixelW, stixelH, true);
+		reduceTranspose(confidence, confidence_, stixelW, stixelH);
 
 		// estimate road model from camera tilt and height
 		Line road = calcRoadModelCamera(camera);
-		road.a *= stixeH; // correct slope according to stixe Y resolution
+		road.a *= stixelH; // correct slope according to stixe Y resolution
 
 		//////////////////////////////////////////////////////////////////////////////
 		// dynamic programming
@@ -1076,12 +1083,12 @@ public:
 
 		for (auto& stixel : stixels)
 		{
-			stixel.uL *= stixeW;
-			stixel.vT *= stixeH;
-			stixel.vB *= stixeH;
-			stixel.width = stixeW;
+			stixel.uL *= stixelW;
+			stixel.vT *= stixelH;
+			stixel.vB *= stixelH;
+			stixel.width = stixelW;
 			if (stixel.geoId == G)
-				stixel.disp[0] /= stixeH;
+				stixel.disp[0] /= stixelH;
 		}
 	}
 
@@ -1090,28 +1097,28 @@ public:
 	{
 		stixels.clear();
 
-		const int stixeW = param_.stixelWidth;
-		const int stixeH = param_.stixelYResolution;
+		const int stixelW = param_.stixelWidth;
+		const int stixelH = param_.stixelYResolution;
 
 		const CameraParameters& camera = param_.camera;
 
 		CV_Assert(disparity.type() == CV_32F && confidence.type() == CV_32F && predict.type() == CV_32F);
 		CV_Assert(disparity.size() == confidence.size());
 		CV_Assert(disparity.rows == predict.size[1] && disparity.cols == predict.size[2]);
-		CV_Assert(stixeW == STIXEL_WIDTH_4 || stixeW == STIXEL_WIDTH_8);
-		CV_Assert(stixeH == STIXEL_Y_RESOLUTION_4 || stixeH == STIXEL_Y_RESOLUTION_8);
+		CV_Assert(stixelW == STIXEL_WIDTH_4 || stixelW == STIXEL_WIDTH_8);
+		CV_Assert(stixelH == STIXEL_Y_RESOLUTION_4 || stixelH == STIXEL_Y_RESOLUTION_8);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// process depth input
 		//////////////////////////////////////////////////////////////////////////////
 
 		// reduce and reorder disparity map
-		reduceTranspose(disparity, disparity_, stixeW, stixeH, true);
-		reduceTranspose(confidence, confidence_, stixeW, stixeH);
+		reduceTranspose(disparity, disparity_, stixelW, stixelH, true);
+		reduceTranspose(confidence, confidence_, stixelW, stixelH);
 
 		// estimate road model from camera tilt and height
 		Line road = calcRoadModelCamera(param_.camera);
-		road.a *= stixeH; // correct slope according to stixe Y resolution
+		road.a *= stixelH; // correct slope according to stixe Y resolution
 
 		//////////////////////////////////////////////////////////////////////////////
 		// process semantic input
@@ -1127,7 +1134,7 @@ public:
 
 		OMP_PARALLEL_FOR
 		for (int ch = 0; ch < chns; ch++)
-			reduceTranspose(getch(predict, ch), getch(predict_, ch), stixeW, stixeH);
+			reduceTranspose(predict, predict_, ch, stixelW, stixelH);
 
 		const auto costScale = calcCostScale(predict_);
 
@@ -1159,12 +1166,12 @@ public:
 
 		for (auto& stixel : stixels)
 		{
-			stixel.uL *= stixeW;
-			stixel.vT *= stixeH;
-			stixel.vB *= stixeH;
-			stixel.width = stixeW;
+			stixel.uL *= stixelW;
+			stixel.vT *= stixelH;
+			stixel.vB *= stixelH;
+			stixel.width = stixelW;
 			if (stixel.geoId == G)
-				stixel.disp[0] /= stixeH;
+				stixel.disp[0] /= stixelH;
 		}
 	}
 

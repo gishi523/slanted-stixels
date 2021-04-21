@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
-	set(CMAKE_CXX_FLAGS "-O3 -Wall")
+	set(CMAKE_CXX_FLAGS "-O3 -Wall -msse4.1")
 endif()
 
 # OpenCV
