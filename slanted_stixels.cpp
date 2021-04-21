@@ -1054,7 +1054,7 @@ public:
 
 		// estimate road model from camera tilt and height
 		Line road = calcRoadModelCamera(camera);
-		road.a *= stixelH; // correct slope according to stixe Y resolution
+		road.a *= stixelH; // correct slope according to stixel Y resolution
 
 		//////////////////////////////////////////////////////////////////////////////
 		// dynamic programming
@@ -1118,7 +1118,7 @@ public:
 
 		// estimate road model from camera tilt and height
 		Line road = calcRoadModelCamera(param_.camera);
-		road.a *= stixelH; // correct slope according to stixe Y resolution
+		road.a *= stixelH; // correct slope according to stixel Y resolution
 
 		//////////////////////////////////////////////////////////////////////////////
 		// process semantic input
