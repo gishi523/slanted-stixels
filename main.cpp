@@ -207,8 +207,7 @@ int main(int argc, char** argv)
 	// setup track bar
 	const int stixelWidth[2] = { 4, 8 };
 	const int stixelYResolution[2] = { 4, 8 };
-	enum { DRAW_DEPTH_STIXEL = 0, DRAW_SEMANTIC_STIXEL = 1, };
-	int stixelW = 0, stixelH = 0, drawMode = DRAW_SEMANTIC_STIXEL;
+	int stixelW = 0, stixelH = 0;
 	cv::namedWindow("trackbar");
 	cv::resizeWindow("trackbar", cv::Size(512, 256));
 	cv::createTrackbar("stixel W", "trackbar", &stixelW, 1);
@@ -232,8 +231,6 @@ int main(int argc, char** argv)
 		classes = readClasses(parser.get<std::string>("classes"));
 		colors = readColors(parser.get<std::string>("colors"));
 		param.geometry = readGeometry(parser.get<std::string>("geometry"));
-
-		cv::createTrackbar("draw mode", "trackbar", &drawMode, 1);
 
 		drawLegend(legend, classes, colors);
 		cv::imshow("legend", legend);
