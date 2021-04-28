@@ -117,6 +117,9 @@ struct PlaneSAT
 		const float x = static_cast<float>(v);
 		const float y = d;
 
+		if (d < 0)
+			w = 0;
+
 		sxx += w * x * x;
 		sxy += w * x * y;
 		syy += w * y * y;
@@ -185,7 +188,7 @@ static float calcSum(const cv::Mat1f& src, int srcu, int srcv, int w, int h)
 	return sum;
 }
 
-static float calcMean(const cv::Mat1f& src, int srcu, int srcv, int w, int h)
+static float calcMean(const cv::Mat1f& src, int srcu, int srcv, int w, int h, int threshold)
 {
 	float sum = 0;
 	int cnt = 0;
@@ -202,7 +205,7 @@ static float calcMean(const cv::Mat1f& src, int srcu, int srcv, int w, int h)
 
 		}
 	}
-	return sum / std::max(cnt, 1);
+	return cnt >= threshold ? sum / cnt : -1;
 }
 
 static void reduceTranspose(const cv::Mat1f& src, cv::Mat1f& dst, int stixelW, int stixelH,
@@ -215,9 +218,10 @@ static void reduceTranspose(const cv::Mat1f& src, cv::Mat1f& dst, int stixelW, i
 
 	if (hasInvalidValue)
 	{
+		const int threshold = stixelW * stixelW / 2;
 		for (int dstv = 0, srcv = 0; dstv < vmax; dstv++, srcv += stixelH)
 			for (int dstu = 0, srcu = 0; dstu < umax; dstu++, srcu += stixelW)
-				dst(dstu, dstv) = calcMean(src, srcu, srcv, stixelW, stixelH);
+				dst(dstu, dstv) = calcMean(src, srcu, srcv, stixelW, stixelH, threshold);
 	}
 	else
 	{

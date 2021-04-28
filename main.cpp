@@ -63,7 +63,6 @@ public:
 			cv::pyrDown(G2_, I2_);
 			sgm_->compute(I1_, I2_, D1_, D2_, C1_);
 			D1_.convertTo(Df_, CV_32F, 2. / SemiGlobalMatching::DISP_SCALE);
-			C1_.setTo(0, D1_ < 0);
 			cv::resize(Df_, D1, I1.size(), 0, 0, cv::INTER_NEAREST);
 			cv::resize(C1_, C1, I1.size(), 0, 0, cv::INTER_NEAREST);
 		}
@@ -71,7 +70,6 @@ public:
 		{
 			sgm_->compute(G1_, G2_, D1_, D2_, C1);
 			D1_.convertTo(D1, CV_32F, 1. / SemiGlobalMatching::DISP_SCALE);
-			C1.setTo(0, D1_ < 0);
 		}
 	}
 
