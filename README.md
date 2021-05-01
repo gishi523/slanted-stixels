@@ -63,7 +63,7 @@ Usage: slanted_stixels [params] image-format-L image-format-R
 	--depth-only
 		compute without semantic segmentation.
 	--sgm-scaledown
-        scaledown sgm input images for speedup.
+		scaledown sgm input images for speedup.
 ```
 
 ### Example
