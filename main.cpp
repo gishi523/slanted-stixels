@@ -86,7 +86,7 @@ public:
 
 	InferenceEngine() {}
 
-	void init(const std::string& model, cv::Size size, int backendId = 0, int targetId = 0)
+	void init(const std::string& model, int backendId = 0, int targetId = 0)
 	{
 		net_ = cv::dnn::readNet(model);
 		net_.setPreferableBackend(backendId);
@@ -95,7 +95,7 @@ public:
 
 	void infer(const cv::Mat& src, cv::Mat& dst)
 	{
-		cv::dnn::blobFromImage(src, tensor_, 1. / 255, inputSize_, cv::Scalar(), true, false);
+		cv::dnn::blobFromImage(src, tensor_, 1. / 255, cv::Size(), cv::Scalar(), true, false);
 		net_.setInput(tensor_);
 		net_.forward(dst);
 
@@ -107,7 +107,6 @@ private:
 
 	cv::dnn::Net net_;
 	cv::Mat tensor_;
-	cv::Size inputSize_;
 };
 
 void scaleCameraParams(CameraParameters& camera, cv::Size ssize, cv::Size dsize)
@@ -224,7 +223,7 @@ int main(int argc, char** argv)
 		const std::string model = parser.get<std::string>("model");
 		const int backendId = parser.get<int>("backend");
 		const int targetId = parser.get<int>("target");
-		net.init(model, inputSize, backendId, targetId);
+		net.init(model, backendId, targetId);
 
 		classes = readClasses(parser.get<std::string>("classes"));
 		colors = readColors(parser.get<std::string>("colors"));
