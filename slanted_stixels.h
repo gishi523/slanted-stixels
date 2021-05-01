@@ -1,5 +1,5 @@
-#ifndef __MULTILAYER_STIXEL_WORLD_H__
-#define __MULTILAYER_STIXEL_WORLD_H__
+#ifndef __SLANTED_STIXELS_H__
+#define __SLANTED_STIXELS_H__
 
 #include <opencv2/core.hpp>
 
@@ -52,7 +52,7 @@ struct CameraParameters
 
 /** @brief SlantedStixels class.
 
-The class implements the Slanted Stixel computation based on [1][2][3].
+The class implements the Slanted Stixel computation based on [1][2].
 [1] Hernandez-Juarez, Daniel, et al. "Slanted Stixels: A way to represent steep streets." International Journal of Computer Vision 127.11 (2019): 1643-1658.
 [2] Hernandez-Juarez, Daniel, et al. "3D Perception with Slanted Stixels on GPU." IEEE Transactions on Parallel and Distributed Systems (2021).
 */
