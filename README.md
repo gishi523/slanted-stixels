@@ -62,6 +62,8 @@ Usage: slanted_stixels [params] image-format-L image-format-R
 	    target device. see cv::dnn::Net::setPreferableTarget.
 	--depth-only
 		compute without semantic segmentation.
+	--sgm-scaledown
+        scaledown sgm input images for speedup.
 ```
 
 ### Example
