@@ -43,23 +43,23 @@ Usage: slanted_stixels [params] image-format-L image-format-R
 	--camera
 		path to camera parameters.
 	--start-number (value:1)
-	    start frame number.
+		start frame number.
 	--model
-	    path to a binary file of model contains trained weights.
+		path to a binary file of model contains trained weights.
 	--classes
-	    path to a text file with names of classes.
+		path to a text file with names of classes.
 	--colors
-	    path to a text file with colors for each class.
+		path to a text file with colors for each class.
 	--geometry
-	    path to a text file with geometry id (0:ground 1:object 2:sky) for each class.
+		path to a text file with geometry id (0:ground 1:object 2:sky) for each class.
 	--width (value:1024)
 		input image width for neural network.
 	--height (value:512)
-	    input image height for neural network.
+		input image height for neural network.
 	--backend (value:0)
 		computation backend. see cv::dnn::Net::setPreferableBackend.
 	--target (value:0)
-	    target device. see cv::dnn::Net::setPreferableTarget.
+		target device. see cv::dnn::Net::setPreferableTarget.
 	--depth-only
 		compute without semantic segmentation.
 	--sgm-scaledown
