@@ -74,10 +74,10 @@ cd slanted_stixels
 path_to_left_images/stuttgart_00_000000_%06d_leftImg8bit.png \
 path_to_right_images/stuttgart_00_000000_%06d_rightImg8bit.png \
 --camera=camera_parameters/cityscapes.xml \
---model=etfnet/erfnet.onnx \
---classes=etfnet/classes.txt \
---colors=etfnet/colors.txt \
---geometry=etfnet/geometry.txt \
+--model=erfnet/erfnet.onnx \
+--classes=erfnet/classes.txt \
+--colors=erfnet/colors.txt \
+--geometry=erfnet/geometry.txt \
 --target=1
 ```
 
